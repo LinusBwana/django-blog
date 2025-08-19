@@ -39,9 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Installed Apps
-    'messages',
     'posts',
     'users',
+    'comments',
+    'user_messages',
 ]
 
 MIDDLEWARE = [
