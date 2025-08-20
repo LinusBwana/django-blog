@@ -6,7 +6,7 @@ class Posts(models.Model):
     post_title = models.CharField(max_length=50)
     post_content = models.TextField()
     posted_on = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.post_title
