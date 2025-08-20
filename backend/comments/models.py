@@ -9,3 +9,7 @@ class Comments(models.Model):
 
     def __str__(self):
         return self.comment_content
+    
+    class Meta:
+        verbose_name = 'Comment'
+        verbose_name_plural = 'Comments'

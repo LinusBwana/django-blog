@@ -10,3 +10,7 @@ class Posts(models.Model):
 
     def __str__(self):
         return self.post_title
+    
+    class Meta:
+        verbose_name = "Post"
+        verbose_name_plural = "Posts"
