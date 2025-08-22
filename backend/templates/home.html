@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Home Page{% endblock title %}
+
+{% block content %}
+    <header>
+        <h1>Trending Topics</h1>
+    </header>
+
+    {% for post in posts %}
+    <article>
+        <header>
+            <h2>
+                <a href="{% url "post_details" post.id %}">
+                    {{ post.post_title }}
+                </a>
+            </h2>
+        </header>
+
+        <section>
+            <p>{{ post.post_content | truncatewords:50 }}</p>
+            <p><small>Posted by {{ post.user }} on {{ post.posted_on }}</small></p>
+        </section>
+    </article>      
+    {% endfor %}
+
+{% endblock content %}
