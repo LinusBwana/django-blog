@@ -5,7 +5,18 @@ from django.contrib import messages
 
 # Create your views here.
 def loginView(request):
-    pass        
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        messages.error(request, 'Invalid username or password')
+        return redirect('login')
+    return render(request, 'login.html')    
 
 def registerView(request):
     if request.method == 'POST':
