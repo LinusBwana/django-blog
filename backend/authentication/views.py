@@ -18,6 +18,7 @@ def loginView(request):
         return redirect('login')
     return render(request, 'login.html')    
 
+
 def registerView(request):
     if request.method == 'POST':
         first_name = request.POST.get('first_name').capitalize()
@@ -65,4 +66,6 @@ def registerView(request):
 
 
 def logoutView(request):
-    pass
+    logout(request)
+    messages.success(request, 'Logout successful. Login again')
+    return redirect('login')

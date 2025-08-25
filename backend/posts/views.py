@@ -3,6 +3,7 @@ from rest_framework import viewsets
 from .serializers import PostSerializer
 from .models import Posts
 from .forms import PostForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 class PostViewSet(viewsets.ModelViewSet):
@@ -19,6 +20,7 @@ def post_details(request, slug):
     serialized_post = PostSerializer(post)
     return render(request, 'post_page.html', {'post': serialized_post.data})
 
+@login_required
 def new_post(request):
     if request.method == "POST":
         form = PostForm(request.POST)
