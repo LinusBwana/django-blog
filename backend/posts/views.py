@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from rest_framework import viewsets
 from .serializers import PostSerializer
 from .models import Posts
+from .forms import PostForm
 
 # Create your views here.
 class PostViewSet(viewsets.ModelViewSet):
@@ -17,3 +18,16 @@ def post_details(request, slug):
     post = get_object_or_404(Posts, slug=slug)
     serialized_post = PostSerializer(post)
     return render(request, 'post_page.html', {'post': serialized_post.data})
+
+def new_post(request):
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            return redirect('home')
+    else:
+        form = PostForm()
+    
+    return render(request, 'new_post.html', {'form': form})

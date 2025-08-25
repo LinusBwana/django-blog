@@ -1,26 +1,52 @@
-{% extends "base.html" %}
-{% block title %}Home Page{% endblock title %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Blog{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <h2><a href="{% url 'home' %}">My Blog</a></h2>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'new_post' %}">New Post</a></li>
+            </ul>
+        </div>
+    </nav>
 
-{% block content %}
-    <header>
-        <h1>Trending Topics</h1>
-    </header>
+    <main>
+        {% block content %}
+            <header>
+                <h1>Trending Topics</h1>
+            </header>
 
-    {% for post in posts %}
-    <article>
-        <header>
-            <h2>
-                <a href="{% url "post_details" post.slug %}">
-                    {{ post.post_title }}
-                </a>
-            </h2>
-        </header>
+            {% for post in posts %}
+            <article>
+                <header>
+                    <h2>
+                        <a href="{% url "post_details" post.slug %}">
+                            {{ post.post_title }}
+                        </a>
+                    </h2>
+                </header>
 
-        <section>
-            <p>{{ post.post_content | truncatewords:50 }}</p>
-            <p><small>Posted by {{ post.user }} on {{ post.posted_on }}</small></p>
-        </section>
-    </article>      
-    {% endfor %}
+                <section>
+                    <p>{{ post.post_content | truncatewords:50 }}</p>
+                    <p><small>Posted by {{ post.user }} on {{ post.posted_on }}</small></p>
+                </section>
+            </article>      
+            {% endfor %}
 
-{% endblock content %}
+        {% endblock content %}
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 My Blog. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

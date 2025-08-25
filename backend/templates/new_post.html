@@ -1,0 +1,35 @@
+{% extends "home.html" %}
+{% block title %}New Post{% endblock title %}
+
+{% block content %}
+    <header>
+        <h1>Create your post</h1>
+    </header>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="{{ form.post_title.id_for_label }}">
+                Post Title <span class="required">*</span>
+            </label>
+            {{ form.post_title }}
+            {% if form.post_title.errors %}
+                <span class="error-message">{{ form.post_title.errors }}</span>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.post_content.id_for_label }}">
+                Post Content <span class="required">*</span>
+            </label>
+            {{ form.post_content }}
+            {% if form.post_content.errors %}
+                <span class="error-message">{{ form.post_content.errors }}</span>
+            {% endif %}
+        </div>
+
+        <button type="submit">Publish Post</button>
+    </form>
+
+{% endblock content %}
