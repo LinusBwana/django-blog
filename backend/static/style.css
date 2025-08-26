@@ -109,39 +109,135 @@ button[type="submit"]:active {
 /* Header styling */
 header h1 {
     color: #333;
-    margin-bottom: 30px;
+    margin: 10px 10px 20px;
     text-align: center;
 }
 
 /* Navigation styling */
-nav {
-    background-color: #333;
-    padding: 1rem 0;
-    margin-bottom: 2rem;
+.navbar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 0;
 }
 
-nav ul {
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+.nav-brand a {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.nav-brand a:hover {
+    transform: scale(1.05);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Navigation menu */
+.nav-menu {
+    display: flex;
+}
+
+.nav-list {
+    display: flex;
     list-style: none;
     margin: 0;
     padding: 0;
-    display: flex;
+    align-items: center;
     gap: 2rem;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 20px;
 }
 
-nav a {
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
     color: white;
     text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+    font-weight: 500;
+    padding: 10px 16px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-nav a:hover {
-    background-color: #555;
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
+
+.btn-register {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.btn-register:hover {
+    background: white;
+    color: #667eea !important;
+    border-color: white;
+    font-weight: 600;
+}
+
+/* Active page indicator */
+.nav-link.active {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.bar {
+    width: 25px;
+    height: 3px;
+    background: white;
+    margin: 3px 0;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.nav-toggle.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+}
+
+.nav-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-toggle.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.navbar {
+    animation: slideInDown 0.5s ease-out;
+}
+
 
 .center{
     position: absolute;

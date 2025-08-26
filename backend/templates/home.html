@@ -9,16 +9,35 @@
     <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
 </head>
 <body>
-    <nav>
+    <nav class="navbar">
         <div class="nav-container">
-            <h2><a href="{% url 'home' %}">My Blog</a></h2>
-            <ul>
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'new_post' %}">New Post</a></li>
-                <li><a href="{% url 'login' %}">Login</a></li>
-                <li><a href="{% url 'register' %}">Register</a></li>         
-                <li><a href="{% url 'logout' %}">Logout</a></li>
-            </ul>
+        
+            <div class="nav-brand">
+                <a href="{% url 'home' %}">My Blog</a>
+            </div>
+            
+            <div class="nav-menu" id="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="{% url 'home' %}" class="nav-link">Home</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a href="{% url 'new_post' %}" class="nav-link">New Post</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a href="{% url 'login' %}" class="nav-link">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'register' %}" class="nav-link btn-register">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
     </nav>
 
@@ -51,6 +70,7 @@
     <footer>
         <p>&copy; 2025 My Blog. All rights reserved.</p>
     </footer>
+    
 </body>
 
 </html>
