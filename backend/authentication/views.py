@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
+from .models import PasswordReset
+from django.urls import reverse
+from django.core.mail import EmailMessage
+from django.conf import settings
 
 # Create your views here.
 def loginView(request):
@@ -69,3 +73,41 @@ def logoutView(request):
     logout(request)
     messages.success(request, 'Logout successful. Login again')
     return redirect('login')
+
+
+def forgotPassword(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+
+        try:
+            user = User.objects.get(email=email)
+            new_password_reset = PasswordReset(user=user)
+            new_password_reset.save()
+
+            password_reset_url = reverse('reset-password', kwargs={'reset_id': new_password_reset.reset_id})
+            full_password_reset_url = f'{request.scheme}://{request.get_host()}{password_reset_url}'
+            email_body = f'Reset your password using the link below:\n\n\n{full_password_reset_url}'
+
+            email_message = EmailMessage(
+                'Reset your password', # email subject
+                email_body,
+                settings.EMAIL_HOST_USER, # email sender
+                [email] # email  receiver 
+            )
+
+            email_message.fail_silently = True
+            email_message.send()
+            return redirect('password-reset-sent', reset_id=new_password_reset.reset_id)
+
+        except User.DoesNotExist:
+            messages.error(request, f"No user with {email} found")
+            return redirect('forgot-password')
+    return render(request, 'forgot_password.html')
+
+
+def passwordResetSent(request, reset_id):
+    return render(request, 'password_reset_sent.html')
+
+
+def resetPassword(request, reset_id):
+    return render(request, 'reset_password.html')
