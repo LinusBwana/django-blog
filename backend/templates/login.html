@@ -1,50 +1,53 @@
 {% extends "home.html" %}
-{% block title %}
-    Login
-{% endblock title %}
+{% block title %}Login{% endblock title %}
 
 {% block content %}
-    <body style="background: linear-gradient(135deg, 
-                hsl(0, 0%, 5%) 0%, 
-                hsl(240, 28%, 14%) 50%, 
-                hsl(224, 48%, 16%) 100%)">
-        <div class="center">
-        <h1>Login</h1>
+<main class="min-vh-100 d-flex justify-content-center align-items-center"
+      style="background: linear-gradient(135deg, rgba(99, 102, 241, 1) 0%, rgba(139, 92, 246, 1) 50%, rgba(168, 85, 247, 1) 100%);">
+    
+    <section class="bg-white p-5 rounded-4 shadow-lg" style="max-width: 400px; width: 100%;">
+        <header class="text-center mb-4">
+            <h1 class="h2 fw-bold text-dark mb-2">Welcome Back</h1>
+            <p class="text-muted">Sign in to your account</p>
+        </header>
 
         {% if messages %}
             {% for message in messages %}
-                {% if message.tags == 'error' %}
-                    <center><h4 style="color: firebrick;">{{message}}</h4></center>
-                {% else %}
-                    <center><h4 style="color: dodgerblue;">{{message}}</h4></center>
-                {% endif %}
+                <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}success{% endif %} rounded-3 mb-4">
+                    {{ message }}
+                </div>
             {% endfor %}
         {% endif %}
-            
-        <form method="POST">
 
+        <form method="POST">
             {% csrf_token %}
 
-            <div class="txt_field">
-                <input type="text" name="username" required>
-                <span></span>
-                <label>Username</label>
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-dark">Username</label>
+                <input type="text" name="username" class="form-control form-control-lg rounded-3 border-2" 
+                       style="background-color: rgba(248, 250, 252, 1);" required>
             </div>
 
-            <div class="txt_field">
-                <input type="password" name="password" required>
-                <span></span>
-                <label>Password</label>
+            <div class="mb-4">
+                <label class="form-label fw-semibold text-dark">Password</label>
+                <input type="password" name="password" class="form-control form-control-lg rounded-3 border-2" 
+                       style="background-color: rgba(248, 250, 252, 1);" required>
             </div>
 
-            <input type="submit" value="Login">
+            <div class="d-grid mb-4">
+                <button type="submit" class="btn btn-lg fw-bold py-3 rounded-3 text-white"
+                        style="background: linear-gradient(135deg, rgba(99, 102, 241, 1) 0%, rgba(139, 92, 246, 1) 100%); border: none;">
+                    Login
+                </button>
+            </div>
 
-            <div class="signup_link">
-                Not a member? <a href={% url "register" %}>Signup</a>
-                <p>Forgot your Password? <a href={% url "forgot-password" %}>Reset Password</a></p> 
+            <hr class="my-4">
+
+            <div class="text-center">
+                <p class="mb-2">Not a member? <a href="{% url 'register' %}" class="text-decoration-none fw-semibold" style="color: #6366f1;">Signup</a></p>
+                <p class="mb-0">Forgot your Password? <a href="{% url 'forgot-password' %}" class="text-decoration-none fw-semibold" style="color: #6366f1;">Reset Password</a></p>
             </div>
         </form>
-        </div>
-
-    </body>
+    </section>
+</main>
 {% endblock content %}

@@ -2,34 +2,79 @@
 {% block title %}New Post{% endblock title %}
 
 {% block content %}
-    <header>
-        <h1>Create your post</h1>
-    </header>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h1 class="h3 mb-0">
+                        <i class="fas fa-pen-alt me-2"></i>Create your post
+                    </h1>
+                </div>
+                
+                <div class="card-body">
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
 
-    <form method="POST">
-        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="{{ form.post_title.id_for_label }}" class="form-label fw-semibold">
+                                Post Title <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" 
+                                   name="{{ form.post_title.html_name }}" 
+                                   id="{{ form.post_title.id_for_label }}"
+                                   class="form-control{% if form.post_title.errors %} is-invalid{% endif %}"
+                                   {% if form.post_title.value %}value="{{ form.post_title.value }}"{% endif %}
+                                   maxlength="200"
+                                   required>
+                            {% if form.post_title.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.post_title.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
 
-        <div class="form-group">
-            <label for="{{ form.post_title.id_for_label }}">
-                Post Title <span class="required">*</span>
-            </label>
-            {{ form.post_title }}
-            {% if form.post_title.errors %}
-                <span class="error-message">{{ form.post_title.errors }}</span>
-            {% endif %}
+                        <div class="mb-4">
+                            <label for="{{ form.post_content.id_for_label }}" class="form-label fw-semibold">
+                                Post Content <span class="text-danger">*</span>
+                            </label>
+                            <textarea name="{{ form.post_content.html_name }}" 
+                                      id="{{ form.post_content.id_for_label }}"
+                                      class="form-control{% if form.post_content.errors %} is-invalid{% endif %}"
+                                      rows="6"
+                                      required>{% if form.post_content.value %}{{ form.post_content.value }}{% endif %}</textarea>
+                            {% if form.post_content.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.post_content.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Share your thoughts with the community.</div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'home' %}" class="btn btn-outline-secondary me-md-2">
+                                <i class="fas fa-times me-1"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane me-1"></i>Publish Post
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Helper text -->
+            <div class="mt-3">
+                <small class="text-muted">
+                    <i class="fas fa-info-circle me-1"></i>
+                    Make sure your post follows our community guidelines.
+                </small>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="{{ form.post_content.id_for_label }}">
-                Post Content <span class="required">*</span>
-            </label>
-            {{ form.post_content }}
-            {% if form.post_content.errors %}
-                <span class="error-message">{{ form.post_content.errors }}</span>
-            {% endif %}
-        </div>
-
-        <button type="submit">Publish Post</button>
-    </form>
-
+    </div>
+</div>
 {% endblock content %}

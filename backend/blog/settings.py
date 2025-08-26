@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'users',
     'comments',
     'authentication',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
