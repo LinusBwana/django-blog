@@ -14,7 +14,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container">
+        <div class="container d-flex justify-content-between align-items-center">
             <div class="nav-brand">
                 <a href="{% url 'home' %}" class="navbar-brand">My Blog</a>
             </div>
@@ -23,7 +23,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             
-            <div class="nav-menu collapse navbar-collapse" id="nav-menu">
+            <div class="nav-menu collapse navbar-collapse" id="nav-menu" >
                 <ul class="nav-list navbar-nav ms-auto">
                     <li class="nav-item">
                         <a href="{% url 'home' %}" class="nav-link">Home</a>
@@ -48,25 +48,25 @@
         </div>
     </nav>
 
-    <main class="container-fluid" style="margin-top: 80px;">
+    <main class="container-fluid" style="margin-top: 10px;">
         {% block content %}
             <div class="main-container">
-                <div class="hero-section">
+                <div class="hero-section mb-3">
                     <h1 class="hero-title">Trending Topics</h1>
-                    <p class="hero-subtitle">Discover the latest stories and insights from my blog</p>
+                    <p class="hero-subtitle mb-1">Discover the latest stories and insights from my blog</p>
                 </div>
 
                 {% for post in posts %}
-                <article class="post-card card">
-                    <header class="post-header">
+                <article class="post-card card my-1 my-md-2">
+                    <header class="post-header py-1 py-md-2">
                         <h2 class="mb-0">
-                            <a href="{% url "post_details" post.slug %}" class="post-title">
+                            <a href="{% url "post_details" post.slug %}" class="post-title fs-3">
                                 {{ post.post_title }}
                             </a>
                         </h2>
                     </header>
 
-                    <section class="post-body">
+                    <section class="post-body py-1 py-md-2">
                         <p class="post-content">{{ post.post_content | truncatewords:50 }}</p>
                         <p class="post-meta">
                             Posted by <strong>{{ post.user }}</strong> on {{ post.posted_on }}

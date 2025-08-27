@@ -3,6 +3,7 @@ from rest_framework import viewsets
 from .serializers import PostSerializer
 from .models import Posts
 from .forms import PostForm
+from comments.forms import CommentForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -17,8 +18,19 @@ def posts_home(request):
 
 def post_details(request, slug):
     post = get_object_or_404(Posts, slug=slug)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.post = post
+            comment.save()
+            return redirect('post_details', slug=slug)
+    form = CommentForm()
+
     serialized_post = PostSerializer(post)
-    return render(request, 'post_page.html', {'post': serialized_post.data})
+    return render(request, 'post_page.html', {'post': serialized_post.data,'form': form})
 
 @login_required
 def new_post(request):
