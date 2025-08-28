@@ -16,6 +16,7 @@ def posts_home(request):
     serialized_posts = PostSerializer(posts, many=True)
     return render(request, 'home.html', {'posts': serialized_posts.data})
 
+@login_required
 def post_details(request, slug):
     post = get_object_or_404(Posts, slug=slug)
 
@@ -54,3 +55,21 @@ def delete_post(request, slug):
         post.delete()
         return redirect('home')
     return redirect('post_details', slug=post.slug)
+
+
+@login_required
+def edit_post(request, slug):
+    post = get_object_or_404(Posts, slug=slug)
+
+    if request.user == post.user:
+        if request.method == 'POST':
+            form = PostForm(request.POST, request.FILES, instance=post)
+            if form.is_valid():
+                form.save()
+                return redirect('post_details', slug=slug)
+        form = PostForm(instance=post)
+    return render(request, 'new_post.html', {
+        'form': form,
+        'edit_mode': True,
+        'post': post,
+    })

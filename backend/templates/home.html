@@ -14,39 +14,41 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container d-flex justify-content-between align-items-center">
+        <div class="container">
             <div class="nav-brand">
-                <a href="{% url 'home' %}" class="navbar-brand">My Blog</a>
+                <a class="navbar-brand" href="{% url 'home' %}">My Blog</a>
             </div>
-            
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#nav-menu" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle navigation">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            
-            <div class="nav-menu collapse navbar-collapse" id="nav-menu" >
-                <ul class="nav-list navbar-nav ms-auto">
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto text-end w-100 d-lg-flex flex-lg-row justify-content-lg-end">
                     <li class="nav-item">
-                        <a href="{% url 'home' %}" class="nav-link">Home</a>
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
                     </li>
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a href="{% url 'new_post' %}" class="nav-link">New Post</a>
+                            <a class="nav-link" href="{% url 'new_post' %}">New Post</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a href="{% url 'login' %}" class="nav-link">Login</a>
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'register' %}" class="nav-link btn-register">Register</a>
+                            <a class="nav-link" href="{% url 'register' %}">Register</a>
                         </li>
                     {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
+
 
     <main class="container-fluid" style="margin-top: 10px;">
         {% block content %}

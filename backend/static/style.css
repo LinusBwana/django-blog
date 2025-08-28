@@ -6,13 +6,16 @@ body {
 }
         
 .navbar {
-    background: rgba(255, 255, 255, 0.95) !important;
+    background: rgba(255, 255, 255, 0.95);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
 }
-
+.nav-brand:hover{
+    transition: all 0.3s ease;
+    transform: translateY(-2px);
+}
 .navbar-brand {
     font-weight: 700;
     font-size: 1.5rem;
@@ -20,6 +23,7 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    border-radius: 8px;
 }
 
 .navbar-nav .nav-link {
@@ -32,13 +36,14 @@ body {
 }
 
 .navbar-nav .nav-link:hover {
-    background-color: hsl(220, 14%, 96%);
-    color: hsl(239, 84%, 67%) !important;
+    background: linear-gradient(135deg, hsl(239, 84%, 67%), hsl(258, 90%, 66%));
+    color: hsl(0, 0%, 100%) !important;
 }
 
 .btn-register:hover, .btn-login:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+    transition: all 0.3s ease;
 }
 
 main {
@@ -127,7 +132,7 @@ main {
 }
 
 footer {
-    background: #1e293bf2 !important;
+    background: hsla(217, 33%, 17%, 0.949) !important;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     margin-top: auto;

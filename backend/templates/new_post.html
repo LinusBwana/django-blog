@@ -56,11 +56,12 @@
                         </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="{% url 'home' %}" class="btn btn-outline-secondary me-md-2">
+                            <a href="{% url 'post_details' post.slug %}" class="btn btn-outline-secondary me-md-2">
                                 <i class="fas fa-times me-1"></i>Cancel
                             </a>
                             <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-paper-plane me-1"></i>Publish Post
+                                <i {% if edit_mode %}class="fas fa-save me-1"{% else %}class="fas fa-paper-plane me-1"{% endif %}></i>
+                                {% if edit_mode %}Save Changes{% else %} Publish Post{% endif%}
                             </button>
                         </div>
                     </form>
