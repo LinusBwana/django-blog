@@ -45,3 +45,12 @@ def new_post(request):
         form = PostForm()
     
     return render(request, 'new_post.html', {'form': form})
+
+
+@login_required
+def delete_post(request, slug):
+    post = get_object_or_404(Posts, slug=slug)
+    if request.user == post.user:
+        post.delete()
+        return redirect('home')
+    return redirect('post_details', slug=post.slug)

@@ -6,20 +6,29 @@
     <div class="container py-5">
         <div class="row justify-content-center"> 
             <div class="col-lg-10">         
-                <article class="bg-white rounded-4 shadow-lg p-5 mb-4">
+                <article class="bg-white rounded-4 shadow-lg px-2 py-3 px-md-5 mb-4">
                     <header class="mb-4">
-                        <h1 class="display-5 fs-2 fw-bold text-dark mb-3">{{ post.post_title }}</h1>
+                        <h1 class="display-5 fs-2 fw-bold text-dark mb-2">{{ post.post_title }}</h1>
                         <div class="d-flex align-items-center text-muted">
                             <span class="me-3">Posted by <strong class="text-dark">{{ post.user }}</strong></span>
                             <span>{{ post.posted_on }}</span>
                         </div>
                     </header>
                 
-                    <section class="mb-5">
-                        <div class="post-content fs-5 lh-lg text-dark">
+                    <section class="mb-3">
+                        <div class="post-content fs-6 lh-lg text-dark">
                             {{ post.post_content|linebreaks }}
                         </div>
                     </section>
+
+                    {% if request.user.username == post.user %}
+                        <form method="POST" action="{% url 'delete_post' post.slug %}">
+                            {% csrf_token %}
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-danger">Delete Post</button>
+                            </div>  
+                        </form>
+                    {% endif %}
                 </article>
 
                 <div class="mb-3">
@@ -34,7 +43,7 @@
                 </div>
 
                 <!-- Comments Section -->
-                <section class="bg-white rounded-4 shadow-lg p-5">
+                <section class="bg-white rounded-4 shadow-lg p-2 p-md-5">
                     {% if post.comments %}
                         <header class="mb-4">
                             <h3 class="h4 fw-bold text-dark mb-0">Comments ({{ post.comments|length }})</h3>
@@ -42,9 +51,9 @@
                         
                         <div class="comments-list">
                             {% for comment in post.comments %}
-                                <div class="comment-item p-4 mb-3 rounded-3" style="background-color: rgba(248, 250, 252, 1); border-left: 4px solid #6366f1;">
+                                <div class="comment-item p-2 mb-2 rounded-3" style="background-color: rgba(248, 250, 252, 1); border-left: 4px solid #6366f1;">
                                     <div class="comment-content mb-2">
-                                        <p class="mb-0 text-dark">{{ comment.your_comment }}</p>
+                                        <p class="mb-0 text-dark fs-6">{{ comment.your_comment }}</p>
                                     </div>
                                     <div class="comment-meta d-flex align-items-center text-muted small">
                                         <span class="me-3">by <strong class="text-dark">{{ comment.user }}</strong></span>

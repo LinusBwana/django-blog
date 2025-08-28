@@ -50,7 +50,7 @@
 
     <main class="container-fluid" style="margin-top: 10px;">
         {% block content %}
-            <div class="main-container">
+            <div class="main-container p-2 p-md-5">
                 <div class="hero-section mb-3">
                     <h1 class="hero-title">Trending Topics</h1>
                     <p class="hero-subtitle mb-1">Discover the latest stories and insights from my blog</p>
@@ -58,7 +58,7 @@
 
                 {% for post in posts %}
                 <article class="post-card card my-1 my-md-2">
-                    <header class="post-header py-1 py-md-2">
+                    <header class="post-header py-1 py-md-2 p-1 p-md-5">
                         <h2 class="mb-0">
                             <a href="{% url "post_details" post.slug %}" class="post-title fs-3">
                                 {{ post.post_title }}
@@ -66,7 +66,7 @@
                         </h2>
                     </header>
 
-                    <section class="post-body py-1 py-md-2">
+                    <section class="post-body py-1 py-md-2 p-1 p-md-5">
                         <p class="post-content">{{ post.post_content | truncatewords:50 }}</p>
                         <p class="post-meta">
                             Posted by <strong>{{ post.user }}</strong> on {{ post.posted_on }}
