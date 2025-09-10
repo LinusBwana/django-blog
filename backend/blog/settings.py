@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,12 +20,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$j*a#nullbele%p1=&-!f*f-#lot1v1ogojb8fyw9c!1vc5_f-'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -82,15 +77,16 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# Initialize environ
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+SECRET_KEY=env('SECRET_KEY')
+DEBUG=env.bool('DEBUG', default=False)
+API_KEY=env('API_KEY')
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fullstackblog',
-        'USER': 'postgres',
-        'PASSWORD': 'Blue@1996',
-        'HOST': 'localhost',
-        'POST': '5432',
-    }
+    'default': env.db()
 }
 
 
@@ -118,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Nairobi'
 
 USE_I18N = True
 
@@ -151,8 +147,8 @@ REST_FRAMEWORK = {
     'DATETIME_FORMAT': "%d %B %Y %I:%M %p"
 }
 
-EMAIL_HOST="smtp.gmail.com"
-EMAIL_PORT=465
-EMAIL_USE_SSL=True
-EMAIL_HOST_USER="email@email.com"
-EMAIL_HOST_PASSWORD="****************"
+EMAIL_HOST=env('EMAIL_HOST')
+EMAIL_PORT=env('EMAIL_PORT')
+EMAIL_USE_SSL=env('EMAIL_USE_SSL')
+EMAIL_HOST_USER=env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD=env('EMAIL_HOST_PASSWORD')
