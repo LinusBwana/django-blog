@@ -1,20 +1,33 @@
+from warnings import filters
 from django.shortcuts import redirect, render, get_object_or_404
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from .serializers import PostSerializer
 from .models import Posts
 from .forms import PostForm
 from comments.forms import CommentForm
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 # Create your views here.
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Posts.objects.all()
     serializer_class = PostSerializer
 
+
 def posts_home(request):
-    posts = Posts.objects.all().order_by('-posted_on')
+    search_query = request.GET.get('search', '')
+    if search_query:
+        posts = Posts.objects.filter(
+            Q(post_title__icontains=search_query) |
+            Q(post_content__icontains=search_query) |
+            Q(user__username__icontains=search_query)
+
+        ).order_by('-posted_on')
+    else:
+        posts = Posts.objects.all().order_by('-posted_on')
     serialized_posts = PostSerializer(posts, many=True)
-    return render(request, 'home.html', {'posts': serialized_posts.data})
+    return render(request, 'home.html', {'posts': serialized_posts.data, 
+                                         'search_query': search_query})
 
 @login_required
 def post_details(request, slug):

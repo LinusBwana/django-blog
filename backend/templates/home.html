@@ -49,33 +49,66 @@
         </div>
     </nav>
 
-
-    <main class="container-fluid" style="margin-top: 10px;">
+    <main class="container-fluid mt-4">
         {% block content %}
-            <div class="main-container p-2 p-md-5">
-                <div class="hero-section mb-3">
-                    <h1 class="hero-title">Trending Topics</h1>
-                    <p class="hero-subtitle mb-1">Discover the latest stories and insights from my blog</p>
-                </div>
+            <div>
+                <form method='GET' action="{% url "home" %}" class="d-flex justify-content-end py-1 py-md-2 p-1 p-md-5 gap-2">
+                    {% csrf_token %}
+                    <input type="text" name="search"
+                        placeholder="Search posts..." 
+                        value="{{ search_query }}" 
+                        class="form-control w-25">
+                    <button type="submit" class="btn btn-success py-2 p-3 my-0 text-white rounded">
+                        <i class="fas fa-search me-1"></i>Search
+                    </button>
+                    {% if search_query %}
+                        <a href="{% url 'home' %}" class="btn btn-secondary text-white">
+                            <i class="fas fa-times me-1"></i>Clear
+                        </a>
+                    {% endif %}
+                </form>
+            </div>
+            
+            <div class="main-container p-2 p-md-3 mt-0">
+                {% if search_query %}
+                    <h5 class="py-0 py-md-1 p-1 p-md-5 text-success">Search Results for "{{ search_query }}"</h5>
+                    <p class="text-muted py-0 py-md-1 p-1 p-md-5">{{ posts|length }} result{{ posts|length|pluralize }} found</p>
+                {% else %}
+                    <div class="hero-section mb-3">
+                        <h1 class="hero-title">Trending Topics</h1>
+                        <p class="hero-subtitle mb-1">Discover the latest stories and insights from my blog</p>
+                    </div>
+                {% endif %}
+                
 
-                {% for post in posts %}
-                <article class="post-card card my-1 my-md-2">
-                    <header class="post-header py-1 py-md-2 p-1 p-md-5">
-                        <h2 class="mb-0">
-                            <a href="{% url "post_details" post.slug %}" class="post-title fs-3">
-                                {{ post.post_title }}
-                            </a>
-                        </h2>
-                    </header>
+                {% if posts %}
+                    {% for post in posts %}
+                    <article class="post-card card my-1 my-md-2">
+                        <header class="post-header py-1 py-md-2 p-1 p-md-5">
+                            <h2 class="mb-0">
+                                <a href="{% url "post_details" post.slug %}" class="post-title fs-3">
+                                    {{ post.post_title }}
+                                </a>
+                            </h2>
+                        </header>
 
-                    <section class="post-body py-1 py-md-2 p-1 p-md-5">
-                        <p class="post-content">{{ post.post_content | truncatewords:50 }}</p>
-                        <p class="post-meta">
-                            Posted by <strong>{{ post.user }}</strong> on {{ post.posted_on }}
-                        </p>
-                    </section>
-                </article>      
-                {% endfor %}
+                        <section class="post-body py-1 py-md-2 p-1 p-md-5">
+                            <p class="post-content">{{ post.post_content | truncatewords:50 }}</p>
+                            <p class="post-meta">
+                                Posted by <strong>{{ post.user }}</strong> on {{ post.posted_on }}
+                            </p>
+                        </section>
+                    </article>      
+                    {% endfor %}
+                {% else %}
+                    {% if search_query %}
+                        <div class="no-results text-center py-5">
+                            <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                            <h4>No posts found</h4>
+                            <p class="text-muted">Try searching with different keywords or <a href="{% url 'home' %}">browse all posts</a>.</p>
+                        </div>
+                    {% endif %}
+                {% endif %}
             </div>
         {% endblock content %}
     </main>
