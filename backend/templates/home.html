@@ -110,6 +110,25 @@
                     {% endif %}
                 {% endif %}
             </div>
+
+            <!-- Pagination at the bottom -->
+            <div class="d-flex justify-content-center fw-bold">
+                <span>
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1" class="text-black">&laquo; first</a>
+                        <a href="?page={{ page_obj.previous_page_number }}" class="text-black">previous</a>
+                    {% endif %}
+
+                    <span class="current text-white">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}" class="text-black">next</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}" class="text-black">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
         {% endblock content %}
     </main>
     

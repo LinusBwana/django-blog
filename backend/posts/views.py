@@ -7,6 +7,7 @@ from .forms import PostForm
 from comments.forms import CommentForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.core.paginator import Paginator
 
 # Create your views here.
 class PostViewSet(viewsets.ModelViewSet):
@@ -25,9 +26,14 @@ def posts_home(request):
         ).order_by('-posted_on')
     else:
         posts = Posts.objects.all().order_by('-posted_on')
-    serialized_posts = PostSerializer(posts, many=True)
+
+    paginator = Paginator(posts, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    serialized_posts = PostSerializer(page_obj, many=True)
     return render(request, 'home.html', {'posts': serialized_posts.data, 
-                                         'search_query': search_query})
+                                         'search_query': search_query,
+                                         "page_obj": page_obj})
 
 @login_required
 def post_details(request, slug):
