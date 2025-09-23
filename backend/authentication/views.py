@@ -140,6 +140,9 @@ def resetPassword(request, reset_id):
                 passwords_have_error = True
                 messages.error(request, 'Reset link has expired')
 
+                # delete reset id after it has expired
+                password_reset_id.delete()
+
             # reset password
             if not passwords_have_error:
                 user = password_reset_id.user
