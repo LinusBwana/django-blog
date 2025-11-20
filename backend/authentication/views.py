@@ -34,7 +34,8 @@ def registerView(request):
         confirm_password = request.POST.get('confirm_password')
 
         user_data_has_error = False
-    
+
+        username = username.lower().strip().replace(" ", "")
         if User.objects.filter(username=username).exists():
             user_data_has_error = True
             messages.error(request, 'Username already exists')
