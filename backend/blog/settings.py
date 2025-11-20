@@ -31,6 +31,12 @@ API_KEY=config('API_KEY')
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*', cast=Csv())
 
+CSRF_TRUSTED_ORIGINS = config(
+    'CSRF_TRUSTED_ORIGINS',
+    default='https://*.railway.app',
+    cast=lambda v: [s.strip() for s in v.split(',')]
+)
+
 
 # Application definition
 
